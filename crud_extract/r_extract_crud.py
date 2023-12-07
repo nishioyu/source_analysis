@@ -11,17 +11,11 @@ def r_extract_crud(sql_query):
     # "JOIN","ON","GRUP BY","LEFT JOIN","INNER JOIN","RIGHT JOIN","FULL OUTER JOIN"
     # があるものは考えない. サブクエリの中のテーブルも抽出される
     tables_list_ailiases = parse.tables_aliases
-    # print(tables_list_no_ailiases)
-    # print(tables_list_ailiases)
     tables_dict = {**dict(zip(tables_list,tables_list)), **parse.tables_aliases}
-    print(tables_dict)
 
     columns_list = parse.columns_dict["select"]
     columns_list_no_ailiases = [x for x in columns_list if "." not in x]
     columns_list_ailiases = [x for x in columns_list if "." in x]
-
-    # print(columns_list_no_ailiases)
-    # print(columns_list_ailiases)
 
     return_list = []
     if len(tables_list_no_ailiases) == 0:
