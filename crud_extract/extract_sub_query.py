@@ -41,3 +41,15 @@ def process_sql_queries(sql_query_list):
             result_list.extend(subqueries)
 
     return result_list
+
+
+def create_sub_queries_list(sql_query):
+    result_list = []
+    tmp_list = []
+    tmp_list.append(sql_query)
+    while len(tmp_list) != 0:
+          result_list.extend(tmp_list)
+          tmp_list = process_sql_queries(tmp_list)
+    return result_list
+
+
