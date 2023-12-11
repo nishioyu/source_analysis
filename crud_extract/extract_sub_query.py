@@ -2,6 +2,10 @@
 def contains_select_substring(input_string):
     return "(SELECT" in input_string
 
+def remove_whitespace_before_select(input_string):
+    return re.sub(r'\(\s*SELECT', '(SELECT', input_string)
+
+
 def remove_outer_parentheses(input_string):
     while input_string.startswith("(") and input_string.endswith(")"):
         input_string = input_string[1:-1]
@@ -11,7 +15,7 @@ def remove_outer_parentheses(input_string):
 def extract_subqueries(sql_query):
     subqueries = []
     stack = []
-    
+
     for char in sql_query:
         if char == '(':
             if ''.join(stack).endswith('SELECT'):
@@ -27,7 +31,7 @@ def extract_subqueries(sql_query):
                 stack = []  # スタックを空にする
         elif stack:
             stack.append(char)
-    
+
     result_list = [item[1:-1] if item.startswith("(") and item.endswith(")") else item for item in subqueries]
     result_list = [remove_outer_parentheses(x) for x in result_list if "SELECT" in x]
     return result_list
@@ -42,8 +46,11 @@ def process_sql_queries(sql_query_list):
 
     return result_list
 
-
 def create_sub_queries_list(sql_query):
+    # クエリの前処理 
+    sql_query = sql_query.replace("\n", "")
+    sql_query = remove_whitespace_before_select(sql_query)
+
     result_list = []
     tmp_list = []
     tmp_list.append(sql_query)
@@ -51,5 +58,3 @@ def create_sub_queries_list(sql_query):
           result_list.extend(tmp_list)
           tmp_list = process_sql_queries(tmp_list)
     return result_list
-
-
