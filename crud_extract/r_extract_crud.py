@@ -16,9 +16,6 @@ def extract_first_select_columns_from_sql(sql_query):
         # SELECTとFROMが見つからない場合はエラー処理などを行うことも考慮できます
         return None
 
-
-
-
 # SELECTのSQLから最外部に当たるCRUDを抽出する処理
 def r_extract_crud(sql_query):
     parse = Parser(sql_query)
