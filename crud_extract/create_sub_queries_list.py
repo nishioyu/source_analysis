@@ -19,7 +19,7 @@ def extract_subqueries(sql_query):
     stack = []
     sql_query = sql_query.replace("\n", " ")
     sql_query = remove_whitespace_before_select(sql_query)
-    # for char in sql_query:
+
     for i, char in enumerate(sql_query):      
         if i == len(sql_query)-1:
           break

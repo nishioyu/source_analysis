@@ -13,7 +13,6 @@ def extract_first_select_columns_from_sql(sql_query):
         columns = [column.strip() for column in selected_part.split(',')]
         return columns
     else:
-        # SELECTとFROMが見つからない場合はエラー処理などを行うことも考慮できます
         return None
 
 # SELECTのSQLから最外部に当たるCRUDを抽出する処理
@@ -22,13 +21,9 @@ def r_extract_crud(sql_query):
 
     tables_list = parse.tables
     tables_list_no_ailiases = dict(zip(tables_list,tables_list))
-    # エイリアス付きのテーブルを辞書型で抽出する. ただしkeyが
-    # "JOIN","ON","GRUP BY","LEFT JOIN","INNER JOIN","RIGHT JOIN","FULL OUTER JOIN"
-    # があるものは考えない. サブクエリの中のテーブルも抽出される
     tables_list_ailiases = parse.tables_aliases
     tables_dict = {**dict(zip(tables_list,tables_list)), **parse.tables_aliases}
 
-    # columns_list = parse.columns_dict["select"]
     columns_list = extract_first_select_columns_from_sql(sql_query)
 
     columns_list_no_ailiases = [x for x in columns_list if "." not in x]
