@@ -7,6 +7,10 @@ def contains_select_substring(input_string):
 def remove_whitespace_before_select(input_string):
     return re.sub(r'\(\s*SELECT', '(SELECT', input_string)
 
+def replace_whitespace(input_string):
+    # 任意の空白文字（スペース、タブ、改行など）を半角スペースに置換
+    result_string = re.sub(r'\s+', ' ', input_string)
+    return result_string
 
 def remove_outer_parentheses(input_string):
     while input_string.startswith("(") and input_string.endswith(")"):
@@ -17,8 +21,9 @@ def remove_outer_parentheses(input_string):
 def extract_subqueries(sql_query):
     subqueries = []
     stack = []
-    sql_query = sql_query.replace("\n", " ")
-    sql_query = remove_whitespace_before_select(sql_query)
+    # sql_query = sql_query.replace("\n", " ")
+    # sql_query = remove_whitespace_before_select(sql_query)
+    sql_query = replace_whitespace(sql_query)
 
     for i, char in enumerate(sql_query):      
         if i == len(sql_query)-1:
@@ -55,8 +60,9 @@ def process_sql_queries(sql_query_list):
 
 def create_sub_queries_list(sql_query):
     # クエリの前処理 
-    sql_query = sql_query.replace("\n", " ")
-    sql_query = remove_whitespace_before_select(sql_query)
+    # sql_query = sql_query.replace("\n", " ")
+    # sql_query = remove_whitespace_before_select(sql_query)
+    sql_query = replace_whitespace(sql_query)
 
     result_list = []
     tmp_list = []
