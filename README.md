@@ -11,4 +11,5 @@ crud_extract/extract_crud.py　の中のextract_crud関数にSQL文を与える�
 xxxx
 
 ## 今後対応する機能
-xxxx
+WITH句のサブクエリに対応する方式を実装
+
